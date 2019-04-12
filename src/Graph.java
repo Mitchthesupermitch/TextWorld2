@@ -4,6 +4,7 @@ import java.util.List;
 public class Graph {
     private HashMap<String, Node> nodes;
     private HashMap<String, Creature> creatures;
+    private HashMap<String, Player> player;
 
     public Graph(){
         nodes = new HashMap<String, Node>();
@@ -11,6 +12,9 @@ public class Graph {
 
     public void addChicken(String name, String description, Graph.Node currentRoom){
         creatures.put(name, new Chicken(name, description, currentRoom));
+    }
+    public void addPlayer(String name, Graph.Node currentRoom){
+        player.put(name, new Player(name, currentRoom));
     }
 
     public void addWumpus(String name, String description, Graph.Node currentRoom){
@@ -21,8 +25,9 @@ public class Graph {
         creatures.put(name, new Chicken(name, description, currentRoom));
     }
 
-    public void addNode(String name, String description){
+    public boolean addNode(String name, String description){
         nodes.put(name, new Node(name, description));
+        return true;
     }
 
     public void addDirectedEdge(String name1, String name2) {
@@ -60,6 +65,11 @@ public class Graph {
     public Creature getCreature(String name) {
         return creatures.get(name);
     }
+
+    public Player getPlayer(String name) {
+        return player.get(name);
+    }
+
 
     public void moveCreatures() {
         for(String name : creatures.keySet()){
@@ -101,14 +111,18 @@ public class Graph {
         public void addItem(Item item){
             items.add(item);
         }
+        public Item getItem(String name){
+                    Item i = new Item("nothing","does not exist");
+                    for(Item item: items){
+                        if(item.getName().equals(name)) {
+                            i = item;
+                        }
+                    }
+                    return i;
+                }
 
         public Item removeItem(String name){
-            Item i = new Item("nothing","does not exist");
-            for(Item item: items){
-                if(item.getName().equals(name)) {
-                    i = item;
-                }
-            }
+            Item i = getItem(name);
             items.remove(i);
             return i;
         }

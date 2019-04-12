@@ -2,22 +2,23 @@ import java.util.ArrayList;
 
 public class Player {
 
-    String name, description;
+    String name;
     ArrayList<Item> items;
     Graph.Node currentRoom;
 
-    public Player(String name, String description) {
+    public Player(String name, Graph.Node room) {
         this.name = name;
-        this.description = description;
+        this.currentRoom = room;
         items = new ArrayList<Item>();
     }
 
-    public void addItem(Item item){
+    public boolean addItem(Item item){
         items.add(item);
         currentRoom.removeItem(name);
+        return true;
     }
 
-    public Item removeItem(String name){
+    public boolean removeItem(String name){
         Item i = new Item("nothing", "i don't exist");
         for(Item item: items){
             if(item.getName().equals(name)) {
@@ -26,7 +27,7 @@ public class Player {
         }
         items.remove(i);
         currentRoom.addItem(i);
-        return i;
+        return true;
     }
 
 
@@ -44,8 +45,9 @@ public class Player {
         return currentRoom;
     }
 
-    public void setCurrentRoom(Graph.Node newroom){
+    public boolean setCurrentRoom(Graph.Node newroom){
         currentRoom=newroom;
+        return true;
     }
 
     
